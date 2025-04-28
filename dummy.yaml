@@ -1,0 +1,28 @@
+model:
+  name: DeepLabV3Plus           # Unet++ / DeepLabV3Plus / Segformer
+  encoder: resnet18             # efficientnet-b3
+  weights: imagenet             # imagenet / null
+  channels: 3                   # number of input channels; for RGB = 3
+  classes: 20                   # number of classes
+
+training:
+  optimizer:
+    type: adam
+    lr: 0.0001
+  scheduler:                    #currently only MultiStepLr is supported: https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.MultiStepLR.html
+    steps: [15, 25]             #after 15 and 25 epochs the current learning rate will be multiplied by factor
+    factor: 0.1
+  loss: dice                    # dice / focal
+  epochs: 15
+  batch_size: 32
+
+data:
+  train:
+    - PATH\TO\train 
+    - PATH\TO\train 
+    - PATH\TO\train
+  valid: 
+    - PATH\TO\valid
+    - PATH\TO\valid
+    - PATH\TO\valid
+  out: C:\test\test
